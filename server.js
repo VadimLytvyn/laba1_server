@@ -1,14 +1,27 @@
-const http = require('http');
+const express = require('express');
+const app = express();
 
-// Створення сервера
-const server = http.createServer((req, res) => {
-  // Встановлення заголовка відповіді
-  res.writeHead(200, { 'Content-Type': 'text/plain' });
-  // Виведення тексту
-  res.end('Hello World');
+// Дані про користувача (прізвище, ім'я)
+const user = {
+    firstName: 'Вадим',
+    lastName: 'Литвин'
+};
+
+// Маршрут для відповіді на запит
+app.get('/', (req, res) => {
+    // Отримуємо поточну дату
+    const currentDate = new Date();
+
+    // Формуємо відповідь, яка включає ім'я, прізвище і дату запиту
+    res.send(`
+        <h1>Прізвище: ${user.lastName}</h1>
+        <h1>Ім'я: ${user.firstName}</h1>
+        <p>Дата запиту: ${currentDate.toLocaleString()}</p>
+    `);
 });
 
-// Прослуховування на порту 8080
-server.listen(8080, () => {
-  console.log('Сервер запущено на http://localhost:8080');
+// Налаштування порту
+const port = 8080;
+app.listen(port, () => {
+    console.log(`Сервер працює на порту ${port}`);
 });
